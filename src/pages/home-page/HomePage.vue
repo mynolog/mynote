@@ -1,7 +1,7 @@
 <script setup>
-import AppLogo from '../../components/common/app-logo/AppLogo.vue'
+import RootLayout from '../../layout/RootLayout.vue'
 </script>
 
 <template>
-  <app-logo variant="long" />
+  <root-layout />
 </template>
