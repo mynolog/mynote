@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const title = ref('mynote')
+import HomePage from './pages/home-page/HomePage.vue'
 </script>
 
 <template>
-  <div id="app">{{ title }}</div>
+  <div id="app">
+    <home-page />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#app {
+  max-width: 1024px;
+  height: 100svh;
+  margin: 0 auto;
+}
+</style>
