@@ -3,7 +3,7 @@ import MemoList from '../components/memo-list/MemoList.vue'
 </script>
 
 <template>
-  <div class="flex">
+  <div>
     <memo-list />
     <router-view />
   </div>

@@ -1,15 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div id="app">
+  <div id="app" class="max-w-[1024px] min-h-screen mx-auto">
     <router-view />
   </div>
 </template>
-
-<style scoped>
-#app {
-  max-width: 1024px;
-  height: 100svh;
-  margin: 0 auto;
-}
-</style>
