@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
-
 interface AppLogoProps {
   variant: 'short' | 'long'
 }
