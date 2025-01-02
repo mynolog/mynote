@@ -8,6 +8,8 @@ const { variant } = defineProps<AppLogoProps>()
 
 <template>
   <div class="app-logo">
-    <p :class="['font-righteous text-2xl']">{{ variant === 'long' ? 'mynote.' : 'my.' }}</p>
+    <p class="font-righteous text-2xl text-soft-blue-900">
+      {{ variant === 'long' ? 'mynote.' : 'my.' }}
+    </p>
   </div>
 </template>
