@@ -1,7 +1,3 @@
-<script setup>
-import RootLayout from '../../layout/RootLayout.vue'
-</script>
+<script setup></script>
 
-<template>
-  <root-layout />
-</template>
+<template>메모를 선택하세요</template>
