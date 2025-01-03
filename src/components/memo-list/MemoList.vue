@@ -1,25 +1,26 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useMemoStore } from '../../stores/memo/memoStore'
-import AppLogo from '../common/app-logo/AppLogo.vue'
 
+const router = useRouter()
 const { memos, openTab } = useMemoStore()
 
 const handleSelectMemo = (id: string) => {
   openTab(id)
+  router.push({ name: 'memo-detail', params: { id } })
 }
 </script>
 
 <template>
-  <div class="w-[210px] relative border-r-2 min-h-screen border-soft-blue-800 overflow-y-auto">
-    <div class="flex fixed w-[200px] h-8 px-5 bg-white">
-      <app-logo variant="long" />
-    </div>
-    <ul class="pt-10 pl-3">
-      <li v-for="memo in memos">
-        <router-link
-          @click="() => handleSelectMemo(memo.id)"
-          :to="{ name: 'memo-detail', params: { id: memo.id } }"
-        >
+  <div class="w-[210px] relative min-h-screen overflow-y-auto">
+    <ul class="flex flex-col pt-8 px-2 h-full bg-gray-200">
+      <li
+        v-for="memo in memos"
+        :key="memo.id"
+        @click="handleSelectMemo(memo.id)"
+        class="px-2 py-1 hover:bg-gray-300 cursor-pointer rounded-md"
+      >
+        <router-link :to="{ name: 'memo-detail', params: { id: memo.id } }">
           {{ memo.title }}
         </router-link>
       </li>
