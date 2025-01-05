@@ -26,5 +26,11 @@ export const useMemoStore = defineStore('memo', {
         this.openedTabs.push(currentMemo)
       }
     },
+    closeTab(id: string) {
+      const target = this.openedTabs.findIndex((tab) => tab.id === id)
+      if (target !== -1) {
+        this.openedTabs.splice(target, 1)
+      }
+    },
   },
 })
