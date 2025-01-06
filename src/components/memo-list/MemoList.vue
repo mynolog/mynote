@@ -13,7 +13,7 @@ const handleSelectMemo = (id: string) => {
 
 <template>
   <div class="w-[210px] relative min-h-screen overflow-y-auto">
-    <ul class="flex flex-col pt-8 px-2 h-full bg-gray-200">
+    <ul class="fixed w-[210px] top-6 flex flex-col pt-8 px-2 h-full bg-gray-200">
       <li
         v-for="memo in memos"
         :key="memo.id"

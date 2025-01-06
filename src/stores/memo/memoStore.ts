@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Memo } from '../../types/memo/MemoTypes'
+import { generateId } from '../../utils/generateId.ts'
 
 interface MemoStoreState {
   memos: Memo[]
@@ -31,6 +32,25 @@ export const useMemoStore = defineStore('memo', {
       if (target !== -1) {
         this.openedTabs.splice(target, 1)
       }
+    },
+
+    createMemo() {
+      let maxNumber = 0
+      this.memos.forEach((memo) => {
+        const match = memo.title.match(/^Untitled (\d+)$/)
+        if (match) {
+          maxNumber = Math.max(maxNumber, parseInt(match[1]))
+        }
+      })
+      const newMemoTitle = `Untitled ${maxNumber + 1}`
+      const newMemo: Memo = {
+        id: generateId(),
+        title: newMemoTitle,
+        content: '',
+      }
+      // this.memos = [...this.memos, newMemo]
+      this.memos.push(newMemo)
+      return newMemo
     },
   },
 })

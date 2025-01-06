@@ -1,27 +1,35 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useMemoStore } from '../../stores/memo/memoStore.ts'
 import AppLogo from '../common/app-logo/AppLogo.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const router = useRouter()
-const { openedTabs, closeTab } = useMemoStore()
+const { openedTabs, closeTab, createMemo, openTab } = useMemoStore()
 
 const handleCloseTab = (id: string) => {
   let nextTabId = openedTabs[openedTabs.length - 1]?.id
-  // 마지막 탭을 닫을 경우
   if (nextTabId === id) {
     nextTabId = openedTabs[openedTabs.length - 2]?.id
   }
   if (nextTabId) {
     router.push({ name: 'memo-detail', params: { id: nextTabId } })
+  } else {
+    // 마지막 탭을 닫을 경우
+    router.push('/')
   }
   closeTab(id)
+}
+
+const handleCreateMemo = () => {
+  const newMemo: Memo = createMemo()
+  openTab(newMemo.id)
+  router.push({ name: 'memo-detail', params: { id: newMemo.id } })
 }
 </script>
 
 <template>
-  <header class="w-full flex">
+  <header class="fixed w-full flex">
     <div class="flex w-[210px] h-8 px-3 bg-gray-200">
       <app-logo variant="long" />
     </div>
@@ -48,7 +56,7 @@ const handleCloseTab = (id: string) => {
           </span>
         </router-link>
       </li>
-      <li class="flex items-center justify-center px-1">
+      <li class="flex items-center justify-center px-1" @click="handleCreateMemo">
         <span class="w-full rounded-md hover:bg-gray-100 px-2 cursor-pointer">
           <font-awesome-icon icon="plus" />
         </span>
