@@ -34,6 +34,7 @@ export const useMemoStore = defineStore('memo', {
       }
     },
 
+    // Create
     createMemo() {
       let maxNumber = 0
       this.memos.forEach((memo) => {
@@ -51,6 +52,13 @@ export const useMemoStore = defineStore('memo', {
       // this.memos = [...this.memos, newMemo]
       this.memos.push(newMemo)
       return newMemo
+    },
+    // Delete
+    deleteMemo(id: string) {
+      const target = this.memos.find((memo) => memo.id === id)
+      if (target !== -1) {
+        this.memos.splice(target, 1)
+      }
     },
   },
 })
