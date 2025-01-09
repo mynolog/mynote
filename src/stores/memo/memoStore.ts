@@ -6,17 +6,12 @@ interface MemoStoreState {
   memos: Memo[]
   openedTabs: Memo[]
 }
-
-const dummyMemos: Memo[] = Array.from({ length: 10 }, (_, index) => ({
-  id: String(index + 1),
-  title: `Memo ${index + 1}`,
-  content: `This is content of Memo ${index + 1}`,
-}))
+// 세션스토리지와 연동
+const storedMemos: Memo[] = JSON.parse(sessionStorage.getItem('memos') || '[]')
 
 export const useMemoStore = defineStore('memo', {
   state: (): MemoStoreState => ({
-    //TODO: 세션 스토리지로 변경
-    memos: dummyMemos,
+    memos: storedMemos,
     selectedMemo: null,
     openedTabs: [],
   }),
@@ -51,8 +46,16 @@ export const useMemoStore = defineStore('memo', {
       }
       // this.memos = [...this.memos, newMemo]
       this.memos.push(newMemo)
+      sessionStorage.setItem('memos', JSON.stringify([...this.memos]))
       return newMemo
     },
+
+    // Read
+    // getStoredMemos() {
+    //   const storedMemos: Memo[] = sessionStorage.getItem('memos') ?? []
+    //   return JSON.parse(storedMemos)
+    // },
+
     // Delete
     deleteMemo(id: string) {
       const target = this.memos.find((memo) => memo.id === id)
@@ -60,5 +63,14 @@ export const useMemoStore = defineStore('memo', {
         this.memos.splice(target, 1)
       }
     },
+  },
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        storage: sessionStorage,
+        path: 'memos',
+      },
+    ],
   },
 })
