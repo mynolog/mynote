@@ -6,7 +6,7 @@ import { useMemoStore } from '../../stores/memo/memoStore'
 
 const route = useRoute()
 const id = computed(() => route.params.id as string)
-const { memos, updateMemo } = useMemoStore()
+const { memos } = useMemoStore()
 
 // selectedMemo를 찾기 위해 memos에서 해당 memo를 찾음
 const selectedMemo = computed<Memo | null>(() => {
@@ -30,7 +30,7 @@ watch(
   () => memos,
   () => {
     // memos 배열이 변경되었을 때 sessionStorage에 저장
-    sessionStorage.setItem('memos', JSON.stringify(memos))
+    localStorage.setItem('memos', JSON.stringify(memos))
   },
   { immediate: true },
 )
@@ -43,12 +43,11 @@ watch(
       // title이 변경되면 해당 메모를 업데이트
       selectedMemo.value.title = newTitle
       // memos 배열에 반영하고 sessionStorage에 저장
-      sessionStorage.setItem('memos', JSON.stringify(memos))
+      localStorage.setItem('memos', JSON.stringify(memos))
     }
   },
 )
 
-// selectedMemo의 content가 변경되었을 때 memos에 반영하고 sessionStorage에 저장
 watch(
   () => selectedMemo.value?.content,
   (newContent) => {
@@ -56,7 +55,7 @@ watch(
       // content가 변경되면 해당 메모를 업데이트
       selectedMemo.value.content = newContent
       // memos 배열에 반영하고 sessionStorage에 저장
-      sessionStorage.setItem('memos', JSON.stringify(memos))
+      localStorage.setItem('memos', JSON.stringify(memos))
     }
   },
 )

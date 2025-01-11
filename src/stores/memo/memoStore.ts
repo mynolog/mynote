@@ -5,21 +5,24 @@ import { generateId } from '../../utils/generateId.ts'
 interface MemoStoreState {
   memos: Memo[]
   openedTabs: Memo[]
+  selectedMemo: Memo | null
 }
-// 세션스토리지와 연동
-const storedMemos: Memo[] = JSON.parse(sessionStorage.getItem('memos') || '[]')
+// 로컬 스토리지와 연동
+const storedMemos: Memo[] = JSON.parse(localStorage.getItem('memos') || '[]')
+const storedOpenedTabs: Memo[] = JSON.parse(localStorage.getItem('openedTabs') || '[]')
 
 export const useMemoStore = defineStore('memo', {
   state: (): MemoStoreState => ({
     memos: storedMemos,
     selectedMemo: null,
-    openedTabs: [],
+    openedTabs: storedOpenedTabs,
   }),
   actions: {
     openTab(id: string) {
       const currentMemo = this.memos.find((memo) => memo.id === id)
       if (currentMemo && !this.openedTabs.some((tab) => tab.id === currentMemo.id)) {
         this.openedTabs.push(currentMemo)
+        localStorage.setItem('openedTabs', JSON.stringify([...this.openedTabs]))
       }
     },
     closeTab(id: string) {
@@ -46,7 +49,7 @@ export const useMemoStore = defineStore('memo', {
       }
       // this.memos = [...this.memos, newMemo]
       this.memos.push(newMemo)
-      sessionStorage.setItem('memos', JSON.stringify([...this.memos]))
+      localStorage.setItem('memos', JSON.stringify([...this.memos]))
       return newMemo
     },
 
@@ -68,7 +71,7 @@ export const useMemoStore = defineStore('memo', {
     enabled: true,
     strategies: [
       {
-        storage: sessionStorage,
+        storage: localStorage,
         path: 'memos',
       },
     ],
