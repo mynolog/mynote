@@ -3,6 +3,9 @@ import { useRouter } from 'vue-router'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useMemoStore } from '../../stores/memo/memoStore.ts'
 import AppLogo from '../common/app-logo/AppLogo.vue'
+import CommonButton from '../common/button/CommonButton.vue'
+import type { Memo } from '../../types/memo/memoTypes.ts'
+import { RoutePath } from '../../types/path/paths.ts'
 
 const router = useRouter()
 const { openedTabs, closeTab, createMemo, openTab } = useMemoStore()
@@ -16,7 +19,7 @@ const handleCloseTab = (id: string) => {
     router.push({ name: 'memo-detail', params: { id: nextTabId } })
   } else {
     // 마지막 탭을 닫을 경우
-    router.push('/')
+    router.push(RoutePath.Home)
   }
   closeTab(id)
 }
@@ -29,9 +32,13 @@ const handleCreateMemo = () => {
 </script>
 
 <template>
-  <header class="fixed w-full flex">
-    <div class="flex w-[210px] h-8 px-3 bg-gray-200">
+  <header class="fixed w-full flex h-14">
+    <div class="flex flex-col w-[210px] px-3 bg-gray-200">
       <app-logo variant="long" />
+      <div class="flex gap-1">
+        <common-button title="로그인" path="/auth/sign-in" />
+        <common-button title="회원가입" path="/auth/sign-up" />
+      </div>
     </div>
     <ul class="h-8 flex flex-1 bg-gray-200">
       <li

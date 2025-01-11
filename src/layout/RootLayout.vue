@@ -6,7 +6,7 @@ import AppHeader from '../components/app-header/ AppHeader.vue'
 <template>
   <div class="flex flex-col mx-auto">
     <app-header />
-    <div class="flex">
+    <div class="flex pt-14">
       <memo-list />
       <router-view />
     </div>
