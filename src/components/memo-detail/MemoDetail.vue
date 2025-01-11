@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import type { Memo } from '../../types/memo/MemoTypes.ts'
+import type { Memo } from '../../types/memo/memoTypes.ts'
 import { useMemoStore } from '../../stores/memo/memoStore'
 
 const route = useRoute()
@@ -39,7 +39,7 @@ watch(
 watch(
   () => selectedMemo.value?.title,
   (newTitle) => {
-    if (selectedMemo.value) {
+    if (selectedMemo.value && newTitle) {
       // title이 변경되면 해당 메모를 업데이트
       selectedMemo.value.title = newTitle
       // memos 배열에 반영하고 sessionStorage에 저장
@@ -51,7 +51,7 @@ watch(
 watch(
   () => selectedMemo.value?.content,
   (newContent) => {
-    if (selectedMemo.value) {
+    if (selectedMemo.value && newContent) {
       // content가 변경되면 해당 메모를 업데이트
       selectedMemo.value.content = newContent
       // memos 배열에 반영하고 sessionStorage에 저장
@@ -62,7 +62,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-full h-screen pl-9 pt-8">
+  <div class="w-full h-screen pl-9">
     <div v-if="selectedMemo" class="w-full h-screen flex flex-col">
       <input
         ref="titleRef"
