@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Memo } from '../../types/memo/MemoTypes'
+import type { Memo } from '../../types/memo/memoTypes.ts'
 import { generateId } from '../../utils/generateId.ts'
 
 interface MemoStoreState {
@@ -61,19 +61,11 @@ export const useMemoStore = defineStore('memo', {
 
     // Delete
     deleteMemo(id: string) {
-      const target = this.memos.find((memo) => memo.id === id)
+      const target = this.memos.findIndex((memo) => memo.id === id)
       if (target !== -1) {
         this.memos.splice(target, 1)
       }
     },
   },
-  persist: {
-    enabled: true,
-    strategies: [
-      {
-        storage: localStorage,
-        path: 'memos',
-      },
-    ],
-  },
+  persist: true,
 })
